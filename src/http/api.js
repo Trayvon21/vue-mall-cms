@@ -1,14 +1,15 @@
 import service from "./index";
+import axios from "../utils";
 export default {
   /**
    * post 登录
    * @param {*} username 用户名
    * @param {*} password 密码
    */
-  login(username, password) {
+  login({ username, password }) {
     return service.post(`login`, {
       username,
-      password
+      password,
     });
   },
 
@@ -19,7 +20,7 @@ export default {
    * @param {*} pagesize 每页显示条数
    * @param {*} query 查询参数 可选
    */
-  userData(pagenum, pagesize, query) {
+  userData({ pagenum, pagesize, query }) {
     return service.get(
       `users?query=${query}&pagenum=${pagenum}&pagesize=${pagesize}`
     );
@@ -31,7 +32,7 @@ export default {
    * @param {*} email 邮箱	可选
    * @param {*} mobile 手机号	可选
    */
-  addUser(username, password, email, mobile) {
+  addUser({ username, password, email, mobile }) {
     return service.post(`users`, { username, password, email, mobile });
   },
   /**
@@ -39,7 +40,7 @@ export default {
    * @param {*} uId 用户ID
    * @param {*} type 用户状态   true 或者 false
    */
-  stateChange(uId, type) {
+  stateChange({ uId, type }) {
     return service.put(`users/${uId}/state/${type}`);
   },
   /**
@@ -55,7 +56,7 @@ export default {
    * @param {*} email 邮箱 可选
    * @param {*} mobile 手机号 可选
    */
-  editUser(uId, email, mobile) {
+  editUser({ uId, email, mobile }) {
     return service.put(`users/${uId}`, { email, mobile });
   },
   /**
@@ -205,7 +206,7 @@ export default {
     return service.post(`categories/${id}/attributes`, {
       attr_name,
       attr_sel,
-      attr_vals
+      attr_vals,
     });
   },
   /**
@@ -240,7 +241,7 @@ export default {
     return service.put(`categories/${id}/attributes/${attrid}`, {
       attr_name,
       attr_sel,
-      attr_vals
+      attr_vals,
     });
   },
   //商品列表数据
@@ -284,7 +285,7 @@ export default {
       goods_weight,
       goods_introduce,
       pics,
-      attrs
+      attrs,
     });
   },
   /**
@@ -322,7 +323,7 @@ export default {
       goods_weight,
       goods_introduce,
       pics,
-      attrs
+      attrs,
     });
   },
   /**
@@ -377,7 +378,7 @@ export default {
       order_pay,
       order_price,
       order_number,
-      pay_status
+      pay_status,
     });
   },
   /**
@@ -395,12 +396,20 @@ export default {
   findExpress(oid) {
     return service.get(`/kuaidi/${oid}`);
   },
-  
+
   //数据统计
   /**
    * get 基于时间统计的折线图
    */
   getChart() {
     return service.get(`reports/type/1`);
-  }
+  },
+  /**
+   * jsonp 获取天气
+   */
+  getWeather() {
+    return service.jsonp(
+      `http://api.map.baidu.com/telematics/v3/weather?location=%E6%88%90%E9%83%BD&output=json&ak=3p49MVra6urFRGOT9s8UBWr2&callback=__jp`
+    );
+  },
 };
