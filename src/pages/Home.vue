@@ -35,6 +35,7 @@ export default {
 <style scoped lang="scss">
 .el-container {
   height: 100vh;
+  min-width: 1024px;
 }
 .el-aside {
   border-right: 1px solid #ebeef5;

@@ -56,10 +56,10 @@ export default {
             name: "主页"
           }
         ];
+        localStorage.setItem("tabList", JSON.stringify(this.tabList));
       } else {
         this.tabList = this.tabList.filter(item => item.path !== path);
       }
-      localStorage.setItem("tabList", JSON.stringify(this.tabList));
       if (index > this.tabList.length - 1) {
         this.$router.push(this.tabList[index - 1].path);
       } else {
@@ -89,8 +89,6 @@ export default {
           (item, index) => index <= this.select
         );
       }
-      //修改local
-      localStorage.setItem("tabList", JSON.stringify(this.tabList));
       //跳转
       if (type === "2") {
         if (this.tabList[this.select].path !== this.$route.path) {
@@ -103,6 +101,7 @@ export default {
       }
       this.flag = false;
     },
+    //拓拽效果
     dragto(e, index) {
       if (e.x !== 0) {
         let left = e.clientX - this.$refs.tags.offsetLeft;
@@ -122,23 +121,23 @@ export default {
             1,
             this.tabList[index]
           )[0];
-        }
-        {
+        } else {
           for (let i in arr) {
-            if (arr[i] < left && arr[Number(i) + 1] > left) {
+            if (arr[i] < left && arr[Number(i) + 1] > left && i !== index) {
               this.tabList[index] = this.tabList.splice(
                 i,
                 1,
                 this.tabList[index]
               )[0];
+              return;
             }
           }
         }
-        localStorage.setItem("tabList", JSON.stringify(this.tabList));
       }
     }
   },
   watch: {
+    //监听路由变化并改变tabList值
     $route(route) {
       let tabList = JSON.parse(localStorage.getItem("tabList"));
       if (!tabList.some(item => item.path === route.path)) {
@@ -147,20 +146,24 @@ export default {
           name: route.meta.title
         });
         this.tabList = tabList;
-        localStorage.setItem("tabList", JSON.stringify(tabList));
       }
+    },
+    //监听tabList变化，保存到本地
+    tabList(val) {
+      localStorage.setItem("tabList", JSON.stringify(val));
     }
   },
   mounted() {
-    this.$bus.$on("closeRightClick", () => {
-      this.flag = false;
-    });
+    //初始化tablist
     if (!localStorage.getItem("tabList")) {
       this.tabList = [{ path: this.$route.path, name: this.$route.meta.title }];
-      localStorage.setItem("tabList", JSON.stringify(this.tabList));
     } else {
       this.tabList = JSON.parse(localStorage.getItem("tabList"));
     }
+    //空白位置单击关闭右键窗口
+    this.$bus.$on("closeRightClick", () => {
+      this.flag = false;
+    });
   },
   computed: {
     active() {
@@ -172,6 +175,7 @@ export default {
 
 <style lang="scss" scoped>
 .tag-each {
+  white-space: nowrap;
   border: 1px solid #ddd;
   font-size: 12px;
   padding: 2px 10px;

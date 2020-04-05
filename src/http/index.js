@@ -40,7 +40,10 @@ service.interceptors.response.use(
   (response) => {
     NProgress.done();
     console.log();
-    if (response.data.meta.status !== 200) {
+    if (
+      response.data.meta.status !== 200 &&
+      response.data.meta.status !== 201
+    ) {
       Message.error(response.data.meta.msg);
     }
     return response.data;

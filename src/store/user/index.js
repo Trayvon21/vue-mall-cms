@@ -7,6 +7,11 @@ export default {
     user: null,
     weather: null,
     menus: null,
+    userData: null,
+    userTotal: null,
+    userPagesize: 5,
+    userPagenum: 1,
+    rolesData: null,
   },
   mutations: {
     getUser(state, data) {
@@ -16,8 +21,16 @@ export default {
       state.weather = data;
     },
     setMenus(state, data) {
-      console.log(data);
       state.menus = data;
+    },
+    setUserData(state, data) {
+      state.userData = data.users;
+      state.userTotal = data.total;
+      state.userPagenum = data.pagenum;
+    },
+    getRolesData(state, data) {
+      console.log(data);
+      state.rolesData = data;
     },
   },
   actions: {
@@ -44,6 +57,61 @@ export default {
       let res = await api.getMenus();
       if (res.meta.status === 200) {
         commit("setMenus", res.data);
+      }
+    },
+    //获取用户信息
+    async getUserData({ commit, state }, params) {
+      let res = await api.userData({
+        pagenum: state.userPagenum,
+        pagesize: state.userPagesize,
+        query: params,
+      });
+      if (res.meta.status === 200) {
+        commit("setUserData", res.data);
+      }
+    },
+    //添加用户信息
+    async addUser({ dispatch }, params) {
+      let res = await api.addUser(params);
+      if (res.meta.status === 201) {
+        Message.success(res.meta.msg);
+        dispatch("getUserData", "");
+      }
+    },
+    //改变用户状态
+    async stateChange({ commit }, params) {
+      let res = await api.stateChange(params);
+      if (res.meta.status === 200) {
+        Message.success(res.meta.msg);
+      }
+    },
+    //编辑用户
+    async editUser({ dispatch }, params) {
+      let res = await api.editUser(params);
+      if (res.meta.status === 200) {
+        Message.success(res.meta.msg);
+        dispatch("getUserData", "");
+      }
+    },
+    //删除用户
+    async delUser({ dispatch }, params) {
+      let res = await api.delUser(params);
+      if (res.meta.status === 200) {
+        Message.success(res.meta.msg);
+        dispatch("getUserData", "");
+      }
+    },
+    async userRole({ dispatch }, params) {
+      let res = await api.userRole(params);
+      if (res.meta.status === 200) {
+        Message.success(res.meta.msg);
+        dispatch("getUserData", "");
+      }
+    },
+    async getRoles({ commit }, params) {
+      let res = await api.getRoles(params);
+      if (res.meta.status === 200) {
+        commit("getRolesData", res.data);
       }
     },
   },

@@ -54,7 +54,7 @@ export default {
           this.login(this.ruleForm);
           this.loading = true;
         } else {
-          this.$Message.err("内容错误");
+          this.$message.error("内容错误");
         }
       });
     },

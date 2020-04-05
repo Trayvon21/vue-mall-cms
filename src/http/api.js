@@ -20,7 +20,7 @@ export default {
    * @param {*} pagesize 每页显示条数
    * @param {*} query 查询参数 可选
    */
-  userData({ pagenum, pagesize, query }) {
+  userData({ pagenum = 1, pagesize = 5, query }) {
     return service.get(
       `users?query=${query}&pagenum=${pagenum}&pagesize=${pagesize}`
     );
@@ -71,7 +71,7 @@ export default {
    * @param {*} uId 用户 ID
    * @param {*} rid 角色 id
    */
-  userRole(uId, rid) {
+  userRole({ uId, rid }) {
     return service.put(`users/${uId}/role`, { rid });
   },
 
@@ -101,7 +101,7 @@ export default {
    * @param {*} roleName 角色名称
    * @param {*} roleDesc 角色描述	可选
    */
-  addRole(roleName, roleDesc) {
+  addRole({ roleName, roleDesc }) {
     return service.post(`roles`, { roleName, roleDesc });
   },
   /**

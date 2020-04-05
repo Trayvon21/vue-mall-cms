@@ -44,12 +44,12 @@ export default {
         .locale("zh-cn")
         .format("YYYY/MM/DD ah:mm:ss");
       let dayOrNight = Number(this.$dayjs(date).format("HH"));
-      console.log(dayOrNight);
       if (dayOrNight > 6 && dayOrNight < 18) {
         this.dayFlag = true;
       } else {
         this.dayFlag = false;
       }
+      clearInterval(this.timeId);
       this.timeId = setInterval(() => {
         this.time = this.$dayjs(new Date())
           .locale("zh-cn")
