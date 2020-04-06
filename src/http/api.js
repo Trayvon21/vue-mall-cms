@@ -117,7 +117,7 @@ export default {
    * @param {*} roleName 角色名称
    * @param {*} roleDesc 角色描述	可选
    */
-  editRole(rid, roleName, roleDesc) {
+  editRole({ rid, roleName, roleDesc }) {
     return service.put(`roles/${rid}`, { roleName, roleDesc });
   },
   /**
@@ -132,7 +132,7 @@ export default {
    * @param {*} rid 角色 ID
    * @param {*} rids 权限 ID 列表（字符串）	以 , 分割
    */
-  roleAuth(rid, rids) {
+  roleAuth({ rid, rids }) {
     return service.post(`roles/${rid}/rights`, { rids });
   },
   /**
@@ -140,7 +140,7 @@ export default {
    * @param {*} roleId 角色 ID
    * @param {*} rightId 权限 ID
    */
-  delRoleAuth(roleId, rightId) {
+  delRoleAuth({ roleId, rightId }) {
     return service.delete(`roles/${roleId}/rights/${rightId}`);
   },
   //商品分类

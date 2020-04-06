@@ -101,6 +101,7 @@ export default {
         dispatch("getUserData", "");
       }
     },
+    //分配角色
     async userRole({ dispatch }, params) {
       let res = await api.userRole(params);
       if (res.meta.status === 200) {
@@ -108,6 +109,7 @@ export default {
         dispatch("getUserData", "");
       }
     },
+    //获取角色列表
     async getRoles({ commit }, params) {
       let res = await api.getRoles(params);
       if (res.meta.status === 200) {

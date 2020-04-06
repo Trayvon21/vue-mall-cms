@@ -165,7 +165,6 @@ export default {
         ]
       },
       labels: [
-        // { prop: "index", label: "#", width: 100 },
         { prop: "username", label: "姓名" },
         { prop: "role_name", label: "角色" },
         { prop: "mobile", label: "电话" },
