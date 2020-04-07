@@ -1,11 +1,13 @@
 <template>
-  <div>
-      欢迎登录
-  </div>
+  <div>欢迎登录</div>
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    console.log(this.$router);
+  }
+};
 </script>
 
 <style lang="scss" scoped>

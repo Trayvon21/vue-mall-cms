@@ -2,7 +2,7 @@
   <div class="flex a-center jc-between header-container">
     <div>欢迎来到长江商城后台管理系统</div>
     <div class="flex a-center jc-around header-right" v-if="weather">
-      <div>{{time}}</div>
+      <div>{{ time | timeFormat }}</div>
       <div>
         <img :src="dayFlag?weather.dayPictureUrl:weather.nightPictureUrl" alt />
       </div>
@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import "dayjs/locale/zh-cn";
 import { createNamespacedHelpers } from "vuex";
 const userModule = createNamespacedHelpers("user");
 const { mapState: userState, mapActions: userActions } = userModule;
@@ -39,11 +38,8 @@ export default {
     },
     //显示时间
     setTime() {
-      let date = new Date();
-      this.time = this.$dayjs(date)
-        .locale("zh-cn")
-        .format("YYYY/MM/DD ah:mm:ss");
-      let dayOrNight = Number(this.$dayjs(date).format("HH"));
+      this.time = new Date();
+      let dayOrNight = this.time.getHours();
       if (dayOrNight > 6 && dayOrNight < 18) {
         this.dayFlag = true;
       } else {
@@ -51,9 +47,7 @@ export default {
       }
       clearInterval(this.timeId);
       this.timeId = setInterval(() => {
-        this.time = this.$dayjs(new Date())
-          .locale("zh-cn")
-          .format("YYYY/MM/DD ah:mm:ss");
+        this.time = new Date();
       }, 1000);
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <div id="main" style="width: 750px;height:400px;"></div>
+      <div id="main" class="line-chart"></div>
     </el-card>
   </div>
 </template>
@@ -65,4 +65,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.line-chart{
+  height: 400px;
+  width: 750px;
+}
 </style>

@@ -150,7 +150,7 @@ export default {
    * @param {*} pagenum 当前页码值
    * @param {*} pagesize 每页显示多少条数据
    */
-  getCategories(type, pagenum, pagesize) {
+  getCategories({ type, pagenum, pagesize }) {
     return service.get(
       `categories?type=${type}&pagenum=${pagenum}&pagesize=${pagesize}`
     );
@@ -161,7 +161,7 @@ export default {
    * @param {*} cat_name 分类名称
    * @param {*} cat_level 分类层级
    */
-  addCategories(cat_pid, cat_name, cat_level) {
+  addCategories({ cat_pid, cat_name, cat_level }) {
     return service.post(`categories`, { cat_pid, cat_name, cat_level });
   },
   /**
@@ -176,7 +176,7 @@ export default {
    * @param {*} id 分类 ID
    * @param {*} cat_name 分类名称
    */
-  editCategories(id, cat_name) {
+  editCategories({ id, cat_name }) {
     return service.put(`categories/${id}`, { cat_name });
   },
   /**
@@ -192,7 +192,7 @@ export default {
    * @param {*} id 分类 ID
    * @param {*} sel [only,many]
    */
-  getAttributes(id, sel) {
+  getAttributes({ id, sel }) {
     return service.get(`categories/${id}/attributes?sel=${sel}`);
   },
   /**
@@ -202,7 +202,7 @@ export default {
    * @param {*} attr_sel [only,many]
    * @param {*} attr_vals 如果是 many 就需要填写值的选项，以逗号分隔 可选
    */
-  addAttributes(id, attr_name, attr_sel, attr_vals) {
+  addAttributes({ id, attr_name, attr_sel, attr_vals }) {
     return service.post(`categories/${id}/attributes`, {
       attr_name,
       attr_sel,
@@ -214,7 +214,7 @@ export default {
    * @param {*} id 分类 ID
    * @param {*} attrid 参数 ID
    */
-  delAttributes(id, attrid) {
+  delAttributes({ id, attrid }) {
     return service.delete(`categories/${id}/attributes/${attrid}`);
   },
   /**
@@ -224,7 +224,7 @@ export default {
    * @param {*} attr_sel [only,many]
    * @param {*} attr_vals 如果是 many 就需要填写值的选项，以逗号分隔 可选
    */
-  findAttributes(id, attrid, attr_sel, attr_vals) {
+  findAttributes({ id, attrid, attr_sel, attr_vals }) {
     return service.get(
       `categories/${id}/attributes/${attrid}?attr_sel=${attr_sel}&attr_vals=${attr_vals}`
     );
@@ -237,7 +237,7 @@ export default {
    * @param {*} attr_sel 属性的类型[many或only]
    * @param {*} attr_vals 参数的属性值	可选
    */
-  editAttributes(id, attrid, attr_name, attr_sel, attr_vals) {
+  editAttributes({ id, attrid, attr_name, attr_sel, attr_vals }) {
     return service.put(`categories/${id}/attributes/${attrid}`, {
       attr_name,
       attr_sel,
@@ -251,7 +251,7 @@ export default {
    * @param {*} pagesize 每页显示条数
    * @param {*} query 查询参数	可选
    */
-  getGoods(pagenum, pagesize, query) {
+  getGoods({ pagenum, pagesize, query }) {
     return service.get(
       `goods?query=${query}&pagenum=${pagenum}&pagesize=${pagesize}`
     );
@@ -267,7 +267,7 @@ export default {
    * @param {*} pics 上传的图片临时路径（对象）	可选
    * @param {*} attrs 商品的参数（数组），包含 动态参数 和 静态属性	 可选
    */
-  addGoods(
+  addGoods({
     goods_name,
     goods_cat,
     goods_price,
@@ -275,8 +275,8 @@ export default {
     goods_weight,
     goods_introduce,
     pics,
-    attrs
-  ) {
+    attrs,
+  }) {
     return service.post(`goods`, {
       goods_name,
       goods_cat,
@@ -306,7 +306,7 @@ export default {
    * @param {*} pics 上传的图片临时路径（对象）	可选
    * @param {*} attrs 商品的参数（数组）	可选
    */
-  editGood(
+  editGood({
     gid,
     goods_name,
     goods_price,
@@ -314,8 +314,8 @@ export default {
     goods_weight,
     goods_introduce,
     pics,
-    attrs
-  ) {
+    attrs,
+  }) {
     return service.put(`goods/${gid}`, {
       goods_name,
       goods_price,
@@ -338,7 +338,7 @@ export default {
    * @param {*} gid 商品 ID
    * @param {*} pics 商品图片集合
    */
-  syncGoodPic(gid, pics) {
+  syncGoodPic({ gid, pics }) {
     return service.put(`goods/${gid}/pics`, { pics });
   },
   /**
@@ -360,8 +360,10 @@ export default {
   /**
    * get订单数据列表
    */
-  getOrders() {
-    return service.get(`orders`);
+  getOrders({ pagenum = 1, pagesize = 10, query = "" }) {
+    return service.get(
+      `orders?pagenum=${pagenum}&pagesize=${pagesize}&query=${query}`
+    );
   },
   /**
    * put 修改订单状态
@@ -372,7 +374,14 @@ export default {
    * @param {*} order_number 订单数量
    * @param {*} pay_status 支付状态
    */
-  editOrders(oid, is_send, order_pay, order_price, order_number, pay_status) {
+  editOrders({
+    oid,
+    is_send,
+    order_pay,
+    order_price,
+    order_number,
+    pay_status,
+  }) {
     return service.put(`orders/${oid}`, {
       is_send,
       order_pay,
