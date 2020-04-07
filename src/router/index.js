@@ -22,11 +22,11 @@ const routes = [
   },
   //用户管理
   {
-    path: "/users/users",
+    path: "/users",
     component: Home,
     children: [
       {
-        path: "",
+        path: "users",
         name: "users",
         component: () => import("../pages/users/Users"),
         meta: {
@@ -38,11 +38,11 @@ const routes = [
   },
   //权限管理
   {
-    path: "/rights/rights",
+    path: "/rights",
     component: Home,
     children: [
       {
-        path: "",
+        path: "rights",
         name: "rights",
         component: () => import("../pages/rights/Rights"),
         meta: {
@@ -50,14 +50,8 @@ const routes = [
           isMeta: true,
         },
       },
-    ],
-  },
-  {
-    path: "/rights/roles",
-    component: Home,
-    children: [
       {
-        path: "",
+        path: "roles",
         name: "roles",
         component: () => import("../pages/rights/roles/Roles"),
         meta: {
@@ -69,11 +63,11 @@ const routes = [
   },
   //商品管理
   {
-    path: "/goods/goods",
+    path: "/goods",
     component: Home,
     children: [
       {
-        path: "",
+        path: "goods",
         name: "goods",
         component: () => import("../pages/goods/Goods"),
         meta: {
@@ -81,14 +75,8 @@ const routes = [
           isMeta: true,
         },
       },
-    ],
-  },
-  {
-    path: "/goods/params",
-    component: Home,
-    children: [
       {
-        path: "",
+        path: "params",
         name: "params",
         component: () => import("../pages/goods/params/Params"),
         meta: {
@@ -96,14 +84,8 @@ const routes = [
           isMeta: true,
         },
       },
-    ],
-  },
-  {
-    path: "/goods/categories",
-    component: Home,
-    children: [
       {
-        path: "",
+        path: "categories",
         name: "categories",
         component: () => import("../pages/goods/categories/Categories"),
         meta: {
@@ -113,13 +95,14 @@ const routes = [
       },
     ],
   },
+
   //订单管理
   {
-    path: "/orders/orders",
+    path: "/orders",
     component: Home,
     children: [
       {
-        path: "",
+        path: "orders",
         name: "orders",
         component: () => import("../pages/orders/Orders"),
         meta: {
@@ -131,11 +114,11 @@ const routes = [
   },
   //数据统计
   {
-    path: "/reports/reports",
+    path: "/reports",
     component: Home,
     children: [
       {
-        path: "",
+        path: "reports",
         name: "reports",
         component: () => import("../pages/reports/Reports"),
         meta: {
