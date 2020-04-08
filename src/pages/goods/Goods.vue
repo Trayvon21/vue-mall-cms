@@ -22,7 +22,12 @@
                 <el-button type="primary" size="mini" icon="el-icon-edit-outline"></el-button>
               </el-tooltip>
               <el-tooltip class="item" effect="dark" content="删除" placement="top">
-                <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
+                <el-button
+                  type="danger"
+                  size="mini"
+                  icon="el-icon-delete"
+                  @click="todelGood(scope.row.goods_id)"
+                ></el-button>
               </el-tooltip>
             </template>
           </el-table-column>
@@ -53,7 +58,7 @@ export default {
     };
   },
   methods: {
-    ...goodsActions(["getGoods"]),
+    ...goodsActions(["getGoods", "delGood"]),
     gotoAdd() {
       this.$router.push("/goods/addGoods");
     },
@@ -65,6 +70,22 @@ export default {
     handleCurrentChange(e) {
       this.$store.state.goods.pages.pagenum = e;
       this.getGoods("");
+    },
+    todelGood(id) {
+      this.$confirm("此操作将永远删除该角色, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.delGood(id);
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   },
   mounted() {

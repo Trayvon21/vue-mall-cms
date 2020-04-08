@@ -1,12 +1,14 @@
 <template>
   <div class="flex a-center jc-between header-container">
     <div>欢迎来到长江商城后台管理系统</div>
-    <div class="flex a-center jc-around header-right" v-if="weather">
+    <div class="flex a-center jc-around header-right">
       <div>{{ time | timeFormat }}</div>
-      <div>
-        <img :src="dayFlag?weather.dayPictureUrl:weather.nightPictureUrl" alt />
+      <div v-if="weather" class="flex">
+        <div>
+          <img :src="dayFlag?weather.dayPictureUrl:weather.nightPictureUrl" alt />
+        </div>
+        <div>{{weather.weather}}</div>
       </div>
-      <div>{{weather.weather}}</div>
       <div>亲爱的，{{user.username}}</div>
       <el-button type="text" @click="exit">退出</el-button>
     </div>

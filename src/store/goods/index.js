@@ -10,9 +10,9 @@ export default {
       total: 0,
     },
     goodsList: [],
-    categoriesList: null,
-    attributesList: null,
-    attributesListOnly: null
+    categoriesList: [],
+    attributesList: [],
+    attributesListOnly: [],
   },
   mutations: {
     //获取商品列表
@@ -25,17 +25,19 @@ export default {
     //获取分类列表
     getCategoriesList(state, data) {
       console.log(data);
-      state.categoriesList = data
+      state.categoriesList = data;
     },
     getAttributesList(state, data) {
       console.log(data);
-      state.attributesList = data
+      data.map((item) => {
+        item.attr_vals = item.attr_vals.split(",");
+      });
+      state.attributesList = data;
     },
     getAttributesListOnly(state, data) {
       console.log(data);
-      state.attributesListOnly = data
-    }
-
+      state.attributesListOnly = data;
+    },
   },
   actions: {
     async getGoods({ commit, state }, query) {
@@ -49,25 +51,34 @@ export default {
       }
     },
     async getCategories({ commit }) {
-      let res = await api.getCategories({ type: 3 })
+      let res = await api.getCategories({ type: 3 });
       if (res.meta.status === 200) {
-        commit('getCategoriesList', res.data)
+        commit("getCategoriesList", res.data);
       }
     },
     async getAttributes({ commit }, params) {
-      let res = await api.getAttributes(params)
+      let res = await api.getAttributes(params);
       if (res.meta.status === 200) {
-        commit('getAttributesList', res.data)
+        commit("getAttributesList", res.data);
       }
-      params.sel = only
-      let res2 = await api.getAttributes(params)
+      params.sel = "only";
+      let res2 = await api.getAttributes(params);
       if (res2.meta.status === 200) {
-        commit('getAttributesListOnly', res.data)
+        commit("getAttributesListOnly", res2.data);
       }
     },
     async addGoods({ commit }, params) {
-      let res = await api.addGoods(params)
-      console.log(res);
-    }
+      let res = await api.addGoods(params);
+      if (res.meta.status === 200) {
+        Message.success(res.meta.msg);
+        router.push("/goods/goods");
+      }
+    },
+    async delGood({ dispatch }, gid) {
+      let res = await api.delGood(gid);
+      if (res.meta.status === 200) {
+        dispatch("getGoods", "");
+      }
+    },
   },
 };
