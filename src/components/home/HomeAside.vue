@@ -1,35 +1,40 @@
 <template>
   <div>
     <el-menu :default-active="active" class="el-menu-vertical-demo" unique-opened>
-      <el-menu-item-group>
-        <el-menu-item index="/" @click="handleSelect(`/`)">
-          <i class="iconfont" :class="`icon-home`"></i>
-          <span>首页</span>
-        </el-menu-item>
-      </el-menu-item-group>
-      <el-submenu :index="item.path" v-for="item in menus" :key="item.id">
-        <template slot="title">
-          <div class="flex a-center">
-            <i class="iconfont" :class="`icon-${item.path}`"></i>
-            <span>{{item.authName}}</span>
-          </div>
-        </template>
-        <el-menu-item-group v-for="i in item.children" :key="i.id">
-          <el-menu-item
-            :index="`/${item.path}/${i.path}`"
-            @click="handleSelect(`/${item.path}/${i.path}`)"
-          >
-            <i class="iconfont" :class="`icon-${item.path}-${i.path}`"></i>
-            <span>{{i.authName}}</span>
-          </el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
+      <div v-for="item in menus" :key="item.id">
+        <el-submenu :index="item.path" v-if="item.authName">
+          <template slot="title">
+            <div class="flex a-center">
+              <i :class="item.icon"></i>
+              <span>{{item.authName}}</span>
+            </div>
+          </template>
+          <el-menu-item-group v-for="i in item.children" :key="i.id">
+            <el-menu-item
+              :index="`/${item.path}/${i.type}`"
+              @click="handleSelect(`/${item.path}/${i.path}`)"
+            >
+              <i :class="i.icon"></i>
+              <span>{{i.authName}}</span>
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+        <div v-else>
+          <el-menu-item-group v-for="i in item.children" :key="i.path">
+            <el-menu-item :index="i.path" @click="handleSelect(`/${i.path}`)">
+              <i :class="i.icon"></i>
+              <span>首页</span>
+            </el-menu-item>
+          </el-menu-item-group>
+        </div>
+      </div>
     </el-menu>
   </div>
 </template>
 
 <script>
-import { createNamespacedHelpers, mapActions } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+import vuex from "vuex";
 const userModule = createNamespacedHelpers("user");
 const { mapState: userState, mapActions: userActions } = userModule;
 export default {
@@ -46,7 +51,11 @@ export default {
   computed: {
     ...userState(["menus"]),
     active() {
-      return this.$route.path;
+      if (this.$route.path !== "/goods/addGoods") {
+        return this.$route.path;
+      } else {
+        return "/goods/goods";
+      }
     }
   }
 };

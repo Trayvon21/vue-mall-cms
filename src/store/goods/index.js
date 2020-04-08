@@ -10,14 +10,32 @@ export default {
       total: 0,
     },
     goodsList: [],
+    categoriesList: null,
+    attributesList: null,
+    attributesListOnly: null
   },
   mutations: {
+    //获取商品列表
     getGoodsList(state, data) {
       state.goodsList = data.goods;
       state.pages.pagenum = Number(data.pagenum);
       state.pages.total = data.total;
       console.log(state.pages);
     },
+    //获取分类列表
+    getCategoriesList(state, data) {
+      console.log(data);
+      state.categoriesList = data
+    },
+    getAttributesList(state, data) {
+      console.log(data);
+      state.attributesList = data
+    },
+    getAttributesListOnly(state, data) {
+      console.log(data);
+      state.attributesListOnly = data
+    }
+
   },
   actions: {
     async getGoods({ commit, state }, query) {
@@ -30,5 +48,26 @@ export default {
         commit("getGoodsList", res.data);
       }
     },
+    async getCategories({ commit }) {
+      let res = await api.getCategories({ type: 3 })
+      if (res.meta.status === 200) {
+        commit('getCategoriesList', res.data)
+      }
+    },
+    async getAttributes({ commit }, params) {
+      let res = await api.getAttributes(params)
+      if (res.meta.status === 200) {
+        commit('getAttributesList', res.data)
+      }
+      params.sel = only
+      let res2 = await api.getAttributes(params)
+      if (res2.meta.status === 200) {
+        commit('getAttributesListOnly', res.data)
+      }
+    },
+    async addGoods({ commit }, params) {
+      let res = await api.addGoods(params)
+      console.log(res);
+    }
   },
 };

@@ -5,7 +5,7 @@
         <el-input class="good-search" placeholder="请输入搜索内容" v-model="search" clearable>
           <el-button slot="append" icon="el-icon-search" @click="gotoSearch()"></el-button>
         </el-input>
-        <el-button type="primary">添加商品</el-button>
+        <el-button type="primary" @click="gotoAdd">添加商品</el-button>
       </div>
       <div>
         <el-table :data="goodsList" style="width: 100%" border>
@@ -54,6 +54,9 @@ export default {
   },
   methods: {
     ...goodsActions(["getGoods"]),
+    gotoAdd() {
+      this.$router.push("/goods/addGoods");
+    },
     handleSizeChange(e) {
       this.$store.state.goods.pages.pagesize = e;
       this.$store.state.goods.pages.pagenum = 1;
@@ -65,7 +68,6 @@ export default {
     }
   },
   mounted() {
-  
     this.getGoods("");
   },
   computed: {

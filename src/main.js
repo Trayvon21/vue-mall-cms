@@ -11,6 +11,9 @@ Vue.use(ElementUI);
 import ZkTable from "vue-table-with-tree-grid";
 Vue.use(ZkTable);
 
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor)
 //引入总线程传值
 import "./bus";
 

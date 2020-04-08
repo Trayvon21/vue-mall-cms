@@ -8,7 +8,6 @@ import params from "./params";
 import categories from "./categories";
 import api from "../http/api";
 Vue.use(Vuex);
-
 export default new Vuex.Store({
   state: {
     chartData: null,

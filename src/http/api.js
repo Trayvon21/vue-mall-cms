@@ -151,9 +151,13 @@ export default {
    * @param {*} pagesize 每页显示多少条数据
    */
   getCategories({ type, pagenum, pagesize }) {
-    return service.get(
-      `categories?type=${type}&pagenum=${pagenum}&pagesize=${pagesize}`
-    );
+    if (pagenum || pagesize) {
+      return service.get(
+        `categories?type=${type}&pagenum=${pagenum}&pagesize=${pagesize}`
+      );
+    } else {
+      return service.get(`categories?type=${type}`)
+    }
   },
   /**
    * post 添加分类
@@ -192,7 +196,7 @@ export default {
    * @param {*} id 分类 ID
    * @param {*} sel [only,many]
    */
-  getAttributes({ id, sel }) {
+  getAttributes({ id, sel = "many" }) {
     return service.get(`categories/${id}/attributes?sel=${sel}`);
   },
   /**

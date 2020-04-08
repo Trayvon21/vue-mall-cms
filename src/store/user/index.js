@@ -1,6 +1,22 @@
 import api from "../../http/api";
 import { Message } from "element-ui";
+import Vue from 'vue'
 import router from "../../router";
+function mapChild(data, routes) {
+  data.map((item, index) => {
+    routes.map(i => {
+      if (i.meta) {
+        if (i.meta.type === item.path) {
+          Vue.set(item, 'icon', i.meta.icon)
+          Vue.set(item, 'type', i.meta.type)
+        }
+      }
+      if (i.children) {
+        mapChild(data[index].children, i.children)
+      }
+    })
+  })
+}
 export default {
   namespaced: true,
   state: {
@@ -21,6 +37,8 @@ export default {
       state.weather = data;
     },
     setMenus(state, data) {
+      mapChild(data, router.options.routes)
+      console.log(data);
       state.menus = data;
     },
     setUserData(state, data) {
@@ -29,7 +47,6 @@ export default {
       state.userPagenum = data.pagenum;
     },
     getRolesData(state, data) {
-      console.log(data);
       state.rolesData = data;
     },
   },
@@ -56,6 +73,8 @@ export default {
     async getMenus({ commit }) {
       let res = await api.getMenus();
       if (res.meta.status === 200) {
+        console.log(res.data);
+        res.data.unshift({ children: [{ authName: '首页', id: 0, path: '', order: 0 }] })
         commit("setMenus", res.data);
       }
     },

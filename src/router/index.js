@@ -16,6 +16,8 @@ const routes = [
         meta: {
           title: "主页",
           isMeta: true,
+          icon: "el-icon-s-home",
+          type: ''
         },
       },
     ],
@@ -32,9 +34,15 @@ const routes = [
         meta: {
           title: "用户列表",
           isMeta: true,
+          icon: "el-icon-user",
+          type: "users"
         },
       },
     ],
+    meta: {
+      icon: "el-icon-phone-outline",
+      type: "users"
+    }
   },
   //权限管理
   {
@@ -48,6 +56,8 @@ const routes = [
         meta: {
           title: "权限列表",
           isMeta: true,
+          icon: "el-icon-lock",
+          type: "rights"
         },
       },
       {
@@ -57,9 +67,15 @@ const routes = [
         meta: {
           title: "角色列表",
           isMeta: true,
+          icon: "el-icon-notebook-2",
+          type: "roles"
         },
       },
     ],
+    meta: {
+      icon: "el-icon-key",
+      type: "rights"
+    }
   },
   //商品管理
   {
@@ -73,6 +89,8 @@ const routes = [
         meta: {
           title: "商品列表",
           isMeta: true,
+          icon: "el-icon-shopping-bag-1",
+          type: "goods"
         },
       },
       {
@@ -82,6 +100,8 @@ const routes = [
         meta: {
           title: "分类参数",
           isMeta: true,
+          icon: "el-icon-suitcase",
+          type: "params"
         },
       },
       {
@@ -91,9 +111,26 @@ const routes = [
         meta: {
           title: "商品分类",
           isMeta: true,
+          icon: "el-icon-shopping-cart-full",
+          type: "categories"
+        },
+      },
+      {
+        path: "addGoods",
+        name: "addGoods",
+        component: () => import("../pages/goods/addGoods/AddGoods"),
+        meta: {
+          title: "添加商品",
+          isMeta: true,
+          icon: "el-icon-shopping-bag-1",
+          type: "goods"
         },
       },
     ],
+    meta: {
+      icon: "el-icon-goods",
+      type: "goods"
+    }
   },
 
   //订单管理
@@ -108,9 +145,15 @@ const routes = [
         meta: {
           title: "订单列表",
           isMeta: true,
+          icon: "el-icon-wallet",
+          type: "orders"
         },
       },
     ],
+    meta: {
+      type: "orders",
+      icon: "el-icon-data-analysis"
+    }
   },
   //数据统计
   {
@@ -124,9 +167,15 @@ const routes = [
         meta: {
           title: "数据报表",
           isMeta: true,
+          icon: "el-icon-position",
+          type: "reports"
         },
       },
     ],
+    meta: {
+      icon: "el-icon-data-analysis",
+      type: "reports"
+    }
   },
   //登录
   {
