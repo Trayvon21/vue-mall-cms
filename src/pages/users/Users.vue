@@ -186,10 +186,10 @@ export default {
       "getRoles"
     ]),
     gotoSearch() {
-      if (this.search.trim() !== "") {
-        this.$store.state.user.userPagenum = 1;
-        this.getUserData(this.search.trim());
-      }
+      // if (this.search.trim() !== "") {
+      this.$store.state.user.userPagenum = 1;
+      this.getUserData(this.search);
+      // }
     },
     toAddUser(formName) {
       this.$refs[formName].validate(valid => {

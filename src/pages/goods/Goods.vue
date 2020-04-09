@@ -19,7 +19,12 @@
           <el-table-column label="操作" align="center" width="120">
             <template slot-scope="scope">
               <el-tooltip class="item" effect="dark" content="编辑" placement="top">
-                <el-button type="primary" size="mini" icon="el-icon-edit-outline"></el-button>
+                <el-button
+                  type="primary"
+                  size="mini"
+                  icon="el-icon-edit-outline"
+                  @click="toEditGood(scope.row)"
+                ></el-button>
               </el-tooltip>
               <el-tooltip class="item" effect="dark" content="删除" placement="top">
                 <el-button
@@ -43,6 +48,26 @@
         ></el-pagination>
       </div>
     </el-card>
+    <el-dialog title="编辑商品" :visible.sync="editFlag" width="750px">
+      <el-form :model="goodsForm" ref="goodsForm" label-width="100px">
+        <el-form-item label="商品名称" prop="goods_name">
+          <el-input v-model="goodsForm.goods_name"></el-input>
+        </el-form-item>
+        <el-form-item label="商品价格" prop="goods_price">
+          <el-input v-model="goodsForm.goods_price"></el-input>
+        </el-form-item>
+        <el-form-item label="商品数量" prop="goods_number">
+          <el-input v-model="goodsForm.goods_number"></el-input>
+        </el-form-item>
+        <el-form-item label="商品重量" prop="goods_weight">
+          <el-input v-model="goodsForm.goods_weight"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancelEdit('orderForm')">取 消</el-button>
+        <el-button type="primary" @click="submitEdit('orderForm')">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -54,22 +79,37 @@ export default {
   name: "Goods",
   data() {
     return {
-      search: ""
+      search: "",
+      editFlag: false,
+      goodsForm: {
+        goods_id: "",
+        goods_name: "",
+        goods_price: "",
+        goods_number: "",
+        goods_weight: "",
+        goods_introduce: "",
+        pics: "",
+        attrs: ""
+      }
     };
   },
   methods: {
-    ...goodsActions(["getGoods", "delGood"]),
+    ...goodsActions(["getGoods", "delGood", "editGood"]),
     gotoAdd() {
       this.$router.push("/goods/addGoods");
+    },
+    gotoSearch() {
+      this.$store.state.goods.pages.pagenum = 1;
+      this.getGoods(this.search);
     },
     handleSizeChange(e) {
       this.$store.state.goods.pages.pagesize = e;
       this.$store.state.goods.pages.pagenum = 1;
-      this.getGoods("");
+      this.getGoods(this.search);
     },
     handleCurrentChange(e) {
       this.$store.state.goods.pages.pagenum = e;
-      this.getGoods("");
+      this.getGoods(this.search);
     },
     todelGood(id) {
       this.$confirm("此操作将永远删除该角色, 是否继续?", "提示", {
@@ -86,6 +126,14 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    toEditGood(row) {
+      console.log(row);
+      this.goodsForm = row;
+      this.editFlag = true;
+    },
+    submitEdit() {
+      this.editGood(this.goodsForm);
     }
   },
   mounted() {

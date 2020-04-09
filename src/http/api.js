@@ -310,7 +310,7 @@ export default {
    * @param {*} attrs 商品的参数（数组）	可选
    */
   editGood({
-    gid,
+    goods_id,
     goods_name,
     goods_price,
     goods_number,
@@ -319,7 +319,7 @@ export default {
     pics,
     attrs,
   }) {
-    return service.put(`goods/${gid}`, {
+    return service.put(`goods/${goods_id}`, {
       goods_name,
       goods_price,
       goods_number,

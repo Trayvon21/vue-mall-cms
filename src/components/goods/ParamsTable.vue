@@ -10,12 +10,17 @@
       <el-table-column label="参数名称" prop="attr_name" align="center"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" icon="el-icon-edit-outline">编辑</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            icon="el-icon-edit-outline"
+            @click="toChange(scope.row)"
+          >编辑</el-button>
           <el-button
             type="danger"
             size="mini"
             icon="el-icon-delete"
-            @click="todelGood(scope.row.goods_id)"
+            @click="todelAttr(scope.row)"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -52,6 +57,16 @@ export default {
     },
     todelGood(id) {
       this.$emit("todelGood", id);
+    },
+    todelAttr(row) {
+      this.$emit("delAttr", {
+        id: row.cat_id,
+        attrid: row.attr_id,
+        sel: row.attr_sel
+      });
+    },
+    toChange(row) {
+      this.$emit("changeAttr", row);
     }
   }
 };

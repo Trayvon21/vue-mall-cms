@@ -46,15 +46,17 @@ export default {
           }
         });
         state.attributesList = data;
+        console.log(data);
       }
     },
-    delAttributes(state, data) {},
     editAttributes(state, { data, sel }) {
-      console.log(state, sel);
+      console.log(state, data);
       let arr = [];
       if (sel === "many") {
         state.attributesList.map((item) => {
           if (item.attr_id === data.attr_id) {
+            item = data;
+            item.attr_name = data.attr_name;
             if (item.attr_vals !== "") {
               item.attr_vals = data.attr_vals.split(",");
             } else {
@@ -65,6 +67,8 @@ export default {
       } else {
         state.attributesListOnly.map((item) => {
           if (item.attr_id === data.attr_id) {
+            item = data;
+            item.attr_name = data.attr_name;
             if (item.attr_vals !== "") {
               item.attr_vals = data.attr_vals.split(" ");
             } else {
@@ -105,21 +109,27 @@ export default {
     async addAttributes({ dispatch }, params) {
       let res = await api.addAttributes(params);
       if (res.meta.status === 201) {
-        dispatch("getAttributes", { id: params.id });
+        await dispatch("getAttributes", {
+          id: params.id,
+          sel: params.attr_sel,
+        });
       }
     },
     //编辑参数
-    async editAttributes({ commit }, params) {
+    async editAttributes({ commit, dispatch }, params) {
       let res = await api.editAttributes(params);
       if (res.meta.status === 200) {
         commit("editAttributes", { data: res.data, sel: params.attr_sel });
+        if (params.type) {
+          dispatch("getAttributes", { id: params.id, sel: params.attr_sel });
+        }
       }
     },
     //删除参数
-    async delAttributes({ commit }, params) {
+    async delAttributes({ dispatch }, params) {
       let res = await api.delAttributes(params);
       if (res.meta.status === 200) {
-        commit("delAttributes", params.id);
+        dispatch("getAttributes", params);
       }
     },
     //添加商品
@@ -133,6 +143,12 @@ export default {
     //删除商品
     async delGood({ dispatch }, gid) {
       let res = await api.delGood(gid);
+      if (res.meta.status === 200) {
+        dispatch("getGoods", "");
+      }
+    },
+    async editGood({ dispatch }, params) {
+      let res = await api.editGood(params);
       if (res.meta.status === 200) {
         dispatch("getGoods", "");
       }

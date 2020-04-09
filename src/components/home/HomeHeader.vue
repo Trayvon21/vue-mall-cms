@@ -36,6 +36,7 @@ export default {
       localStorage.removeItem("user");
       localStorage.removeItem("adminToken");
       localStorage.removeItem("tabList");
+      this.$message.success("期待您的下次登录！");
       this.$router.push("/login");
     },
     //显示时间
