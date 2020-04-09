@@ -1,5 +1,4 @@
 import service from "./index";
-import axios from "../utils";
 export default {
   /**
    * post 登录

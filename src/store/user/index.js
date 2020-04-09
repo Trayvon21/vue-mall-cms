@@ -38,7 +38,6 @@ export default {
     },
     setMenus(state, data) {
       mapChild(data, router.options.routes)
-      console.log(data);
       state.menus = data;
     },
     setUserData(state, data) {

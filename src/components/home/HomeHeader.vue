@@ -3,8 +3,8 @@
     <div>欢迎来到长江商城后台管理系统</div>
     <div class="flex a-center jc-around header-right">
       <div>{{ time | timeFormat }}</div>
-      <div v-if="weather" class="flex">
-        <div>
+      <div v-if="weather" class="flex a-center">
+        <div style="margin-right:10px">
           <img :src="dayFlag?weather.dayPictureUrl:weather.nightPictureUrl" alt />
         </div>
         <div>{{weather.weather}}</div>
