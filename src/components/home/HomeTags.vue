@@ -17,7 +17,7 @@
       <div v-if="active===item.path" class="circle"></div>
       <div>{{item.name}}</div>
       <div
-        v-if="active===item.path&&!(tabList.length===1&&tabList[0].path==='/')"
+        v-if="active===item.path&&!(tabList.length===1&&tabList[0].path==='/index')"
         @click.stop="delTag(item.path,index)"
       >
         <i class="el-icon-close"></i>
@@ -52,7 +52,7 @@ export default {
       if (this.tabList.length === 1) {
         this.tabList = [
           {
-            path: "/",
+            path: "/index",
             name: "主页"
           }
         ];

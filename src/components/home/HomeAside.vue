@@ -10,10 +10,7 @@
             </div>
           </template>
           <el-menu-item-group v-for="i in item.children" :key="i.id">
-            <el-menu-item
-              :index="`/${item.path}/${i.type}`"
-              @click="handleSelect(`/${item.path}/${i.path}`)"
-            >
+            <el-menu-item :index="i.index" @click="handleSelect(`/${item.name}/${i.name}`)">
               <i :class="i.icon"></i>
               <span>{{i.authName}}</span>
             </el-menu-item>
@@ -21,7 +18,7 @@
         </el-submenu>
         <div v-else>
           <el-menu-item-group v-for="i in item.children" :key="i.path">
-            <el-menu-item :index="i.path" @click="handleSelect(`/${i.path}`)">
+            <el-menu-item :index="i.index" @click="handleSelect(`/${i.path}`)">
               <i :class="i.icon"></i>
               <span>首页</span>
             </el-menu-item>
@@ -51,11 +48,7 @@ export default {
   computed: {
     ...userState(["menus"]),
     active() {
-      if (this.$route.path !== "/goods/addGoods") {
-        return this.$route.path;
-      } else {
-        return "/goods/goods";
-      }
+      return this.$route.meta.path;
     }
   }
 };

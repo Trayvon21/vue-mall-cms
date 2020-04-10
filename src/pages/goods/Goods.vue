@@ -64,8 +64,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="cancelEdit('orderForm')">取 消</el-button>
-        <el-button type="primary" @click="submitEdit('orderForm')">确 定</el-button>
+        <el-button @click="cancelEdit('goodsForm')">取 消</el-button>
+        <el-button type="primary" @click="submitEdit('goodsForm')">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -128,12 +128,16 @@ export default {
         });
     },
     toEditGood(row) {
-      console.log(row);
-      this.goodsForm = row;
+      this.goodsForm = JSON.parse(JSON.stringify(row));
       this.editFlag = true;
     },
     submitEdit() {
       this.editGood(this.goodsForm);
+      this.editFlag = false;
+    },
+    cancelEdit(formName) {
+      this.editFlag = false;
+      this.$refs[formName].resetFields();
     }
   },
   mounted() {
@@ -147,7 +151,7 @@ export default {
 
 <style lang="scss" scoped>
 .good-search {
-  width: 700px;
+  width: 400px;
   margin-right: 20px;
 }
 .el-table {

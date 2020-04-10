@@ -1,21 +1,22 @@
 import api from "../../http/api";
 import { Message } from "element-ui";
-import Vue from 'vue'
+import Vue from "vue";
 import router from "../../router";
 function mapChild(data, routes) {
   data.map((item, index) => {
-    routes.map(i => {
+    routes.map((i) => {
       if (i.meta) {
-        if (i.meta.type === item.path) {
-          Vue.set(item, 'icon', i.meta.icon)
-          Vue.set(item, 'type', i.meta.type)
+        if (i.meta.name === item.path) {
+          Vue.set(item, "icon", i.meta.icon);
+          Vue.set(item, "name", i.meta.name);
+          Vue.set(item, "index", i.meta.path);
         }
       }
       if (i.children) {
-        mapChild(data[index].children, i.children)
+        mapChild(data[index].children, i.children);
       }
-    })
-  })
+    });
+  });
 }
 export default {
   namespaced: true,
@@ -28,6 +29,7 @@ export default {
     userPagesize: 5,
     userPagenum: 1,
     rolesData: null,
+    loading: false,
   },
   mutations: {
     getUser(state, data) {
@@ -37,8 +39,10 @@ export default {
       state.weather = data;
     },
     setMenus(state, data) {
-      mapChild(data, router.options.routes)
+      // console.log(data);
+      mapChild(data, router.options.routes);
       state.menus = data;
+      console.log(data);
     },
     setUserData(state, data) {
       state.userData = data.users;
@@ -51,7 +55,8 @@ export default {
   },
   actions: {
     //登录
-    async login({ commit }, params) {
+    async login({ commit, state }, params) {
+      state.loading = true;
       let res = await api.login(params);
       if (res.meta.status === 200) {
         Message.success(res.meta.msg);
@@ -60,6 +65,7 @@ export default {
         commit("getUser", res.data);
         router.push("/");
       }
+      state.loading = false;
     },
     //获取天气
     async getWeather({ commit }) {
@@ -73,7 +79,9 @@ export default {
       let res = await api.getMenus();
       if (res.meta.status === 200) {
         console.log(res.data);
-        res.data.unshift({ children: [{ authName: '首页', id: 0, path: '', order: 0 }] })
+        res.data.unshift({
+          children: [{ authName: "首页", id: 0, path: "index", order: 0 }],
+        });
         commit("setMenus", res.data);
       }
     },

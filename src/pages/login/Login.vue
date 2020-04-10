@@ -27,13 +27,12 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 const userModule = createNamespacedHelpers("user");
-const { mapActions: userActions } = userModule;
+const { mapState: userState, mapActions: userActions } = userModule;
 export default {
   name: "Login",
   data() {
     return {
       ruleForm: { username: "", password: "" },
-      loading: false,
       rules: {
         username: [
           { required: true, message: "账号不能为空", target: "blur" },
@@ -52,7 +51,6 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.login(this.ruleForm);
-          this.loading = true;
         } else {
           this.$message.error("内容错误");
         }
@@ -62,7 +60,9 @@ export default {
       this.$refs[formName].resetFields();
     }
   },
-  mounted() {}
+  computed: {
+    ...userState(["loading"])
+  }
 };
 </script>
 
@@ -99,7 +99,7 @@ export default {
       text-align: center;
       .el-button {
         margin-top: 20px;
-        width: 100px;
+        width: 140px;
       }
     }
   }

@@ -2,6 +2,7 @@ import axios from "axios";
 import NProgress from "nprogress";
 import { Message } from "element-ui";
 import "nprogress/nprogress.css";
+import router from "../router";
 // 判断当前环境是生产环境还是开发环境
 // process.env.NODE_ENV的值决定当前环境
 // production为生产环境 development为开发环境
@@ -45,6 +46,12 @@ service.interceptors.response.use(
       response.data.meta.status !== 201
     ) {
       Message.error(response.data.meta.msg);
+    }
+    if (response.data.meta.msg === "无效token") {
+      localStorage.removeItem("adminToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("tabList");
+      router.push("/login");
     }
     return response.data;
   },

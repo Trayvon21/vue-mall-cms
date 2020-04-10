@@ -7,6 +7,10 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    redirect: "/index",
+  },
+  {
+    path: "/index",
     component: Home,
     children: [
       {
@@ -16,8 +20,9 @@ const routes = [
         meta: {
           title: "主页",
           isMeta: true,
+          name: "index",
           icon: "el-icon-s-home",
-          type: ''
+          path: "/",
         },
       },
     ],
@@ -34,15 +39,16 @@ const routes = [
         meta: {
           title: "用户列表",
           isMeta: true,
+          name: "users",
           icon: "el-icon-user",
-          type: "users"
+          path: "/users/users",
         },
       },
     ],
     meta: {
       icon: "el-icon-phone-outline",
-      type: "users"
-    }
+      name: "users",
+    },
   },
   //权限管理
   {
@@ -57,7 +63,8 @@ const routes = [
           title: "权限列表",
           isMeta: true,
           icon: "el-icon-lock",
-          type: "rights"
+          name: "rights",
+          path: "/rights/rights",
         },
       },
       {
@@ -68,14 +75,15 @@ const routes = [
           title: "角色列表",
           isMeta: true,
           icon: "el-icon-notebook-2",
-          type: "roles"
+          name: "roles",
+          path: "/rights/roles",
         },
       },
     ],
     meta: {
       icon: "el-icon-key",
-      type: "rights"
-    }
+      name: "rights",
+    },
   },
   //商品管理
   {
@@ -90,7 +98,8 @@ const routes = [
           title: "商品列表",
           isMeta: true,
           icon: "el-icon-shopping-bag-1",
-          type: "goods"
+          name: "goods",
+          path: "/goods/goods",
         },
       },
       {
@@ -101,7 +110,8 @@ const routes = [
           title: "分类参数",
           isMeta: true,
           icon: "el-icon-suitcase",
-          type: "params"
+          name: "params",
+          path: "/goods/params",
         },
       },
       {
@@ -112,7 +122,8 @@ const routes = [
           title: "商品分类",
           isMeta: true,
           icon: "el-icon-shopping-cart-full",
-          type: "categories"
+          name: "categories",
+          path: "/goods/categories",
         },
       },
       {
@@ -123,14 +134,15 @@ const routes = [
           title: "添加商品",
           isMeta: true,
           icon: "el-icon-shopping-bag-1",
-          type: "goods"
+          name: "addGoods",
+          path: "/goods/goods",
         },
       },
     ],
     meta: {
       icon: "el-icon-goods",
-      type: "goods"
-    }
+      name: "goods",
+    },
   },
 
   //订单管理
@@ -146,14 +158,15 @@ const routes = [
           title: "订单列表",
           isMeta: true,
           icon: "el-icon-wallet",
-          type: "orders"
+          name: "orders",
+          path: "/orders/orders",
         },
       },
     ],
     meta: {
-      type: "orders",
-      icon: "el-icon-data-analysis"
-    }
+      name: "orders",
+      icon: "el-icon-data-analysis",
+    },
   },
   //数据统计
   {
@@ -168,14 +181,15 @@ const routes = [
           title: "数据报表",
           isMeta: true,
           icon: "el-icon-position",
-          type: "reports"
+          name: "reports",
+          path: "/reports/reports",
         },
       },
     ],
     meta: {
       icon: "el-icon-data-analysis",
-      type: "reports"
-    }
+      name: "reports",
+    },
   },
   //登录
   {
@@ -199,7 +213,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL,
   routes,
 });

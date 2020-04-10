@@ -155,7 +155,7 @@ export default {
         `categories?type=${type}&pagenum=${pagenum}&pagesize=${pagesize}`
       );
     } else {
-      return service.get(`categories?type=${type}`)
+      return service.get(`categories?type=${type}`);
     }
   },
   /**
@@ -179,8 +179,8 @@ export default {
    * @param {*} id 分类 ID
    * @param {*} cat_name 分类名称
    */
-  editCategories({ id, cat_name }) {
-    return service.put(`categories/${id}`, { cat_name });
+  editCategories({ cat_id, cat_name }) {
+    return service.put(`categories/${cat_id}`, { cat_name });
   },
   /**
    * delete 删除分类
@@ -421,7 +421,7 @@ export default {
    */
   getWeather() {
     return service.jsonp(
-      `http://api.map.baidu.com/telematics/v3/weather?location=%E6%88%90%E9%83%BD&output=json&ak=3p49MVra6urFRGOT9s8UBWr2&callback=__jp`
+      `http://api.map.baidu.com/telematics/v3/weather?location=新都&output=json&ak=nL5PUGlGeaqLS9ZiKnY932fl7sQTs9tR`
     );
   },
 };

@@ -9,6 +9,7 @@ module.exports = {
   // 1.jsonp跨域: 原理是利用script标签可以跨域的特点,但是只能发送get请求
   // 2.cors:跨域资源共享 不需要前端配合,只需要后端配置指定端口可以访问接口
   // 3.代理(webpack提供的devServer): 把要跨域的路径代理到本地
+  publicPath: "./",
   devServer: {
     host: "0.0.0.0",
     proxy: {

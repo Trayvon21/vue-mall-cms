@@ -109,6 +109,7 @@ export default {
     async addAttributes({ dispatch }, params) {
       let res = await api.addAttributes(params);
       if (res.meta.status === 201) {
+        Message.success(res.meta.msg);
         await dispatch("getAttributes", {
           id: params.id,
           sel: params.attr_sel,
@@ -119,6 +120,7 @@ export default {
     async editAttributes({ commit, dispatch }, params) {
       let res = await api.editAttributes(params);
       if (res.meta.status === 200) {
+        Message.success(res.meta.msg);
         commit("editAttributes", { data: res.data, sel: params.attr_sel });
         if (params.type) {
           dispatch("getAttributes", { id: params.id, sel: params.attr_sel });
@@ -129,14 +131,15 @@ export default {
     async delAttributes({ dispatch }, params) {
       let res = await api.delAttributes(params);
       if (res.meta.status === 200) {
+        Message.success(res.meta.msg);
         dispatch("getAttributes", params);
       }
     },
     //添加商品
-    async addGoods({ commit }, params) {
+    async addGoods({ dispatch }, params) {
       let res = await api.addGoods(params);
-      if (res.meta.status === 200) {
-        Message.success(res.meta.msg);
+      if (res.meta.status) {
+        dispatch("getGoods", "");
         router.push("/goods/goods");
       }
     },
@@ -144,12 +147,14 @@ export default {
     async delGood({ dispatch }, gid) {
       let res = await api.delGood(gid);
       if (res.meta.status === 200) {
+        Message.success(res.meta.msg);
         dispatch("getGoods", "");
       }
     },
     async editGood({ dispatch }, params) {
       let res = await api.editGood(params);
       if (res.meta.status === 200) {
+        Message.success(res.meta.msg);
         dispatch("getGoods", "");
       }
     },

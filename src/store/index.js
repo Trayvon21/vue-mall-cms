@@ -4,7 +4,6 @@ import user from "./user";
 import right from "./right";
 import order from "./order";
 import goods from "./goods";
-import params from "./params";
 import categories from "./categories";
 import api from "../http/api";
 Vue.use(Vuex);
@@ -28,7 +27,6 @@ export default new Vuex.Store({
     right,
     order,
     goods,
-    params,
     categories,
   },
 });
